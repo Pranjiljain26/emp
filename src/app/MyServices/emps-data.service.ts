@@ -77,7 +77,7 @@ export class EmpsDataService {
   }
 
   removeEmployee(employee: Employee) {
-    let index = this.employees.map((x) => x.name).indexOf(employee.name);
+    let index = this.employees.map((x) => x.email).indexOf(employee.email);
     if (index != -1) {
       this.employees.splice(index, 1);
       return true;
@@ -88,13 +88,11 @@ export class EmpsDataService {
 
   editEmployee(oldEmployeeData: Employee, newEmployeeData: Employee) {
     // if old employee does not exist we will add the employee, else update
-
-    if (oldEmployeeData.name !== "") {
-      this.employees.splice(
-        this.employees.indexOf(oldEmployeeData),
-        1,
-        newEmployeeData
-      );
+    let index = this.employees
+      .map((x) => x.email)
+      .indexOf(oldEmployeeData.email);
+    if (index !== -1) {
+      this.employees.splice(index, 1, newEmployeeData);
     } else {
       this.employees.push(newEmployeeData);
     }
