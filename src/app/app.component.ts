@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
       data: undefined,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      this.router.navigateByUrl("/");
+      this.router.navigateByUrl("/router");
     });
   }
 }

@@ -7,6 +7,7 @@ import { EditEmployeeComponent } from "../employee-dialog/edit-employee/edit-emp
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DeleteDialogComponent } from "../delete-dialog/delete-dialog.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-employee-data",
@@ -16,7 +17,9 @@ import { DeleteDialogComponent } from "../delete-dialog/delete-dialog.component"
   styleUrl: "./employee-data.component.css",
 })
 export class EmployeeDataComponent {
-  // nav;
+  // !snack bar
+  private _snackBar = inject(MatSnackBar);
+
   a;
   employee: Employee;
   constructor(
@@ -44,7 +47,8 @@ export class EmployeeDataComponent {
       if (result) {
         let removed = this.employeeService.removeEmployee(this.employee);
         if (removed) {
-          alert("Employee Deleted successfully");
+          this._snackBar.open("Employee Deleted Successfully");
+
           this.router.navigateByUrl("/home");
         }
       }
