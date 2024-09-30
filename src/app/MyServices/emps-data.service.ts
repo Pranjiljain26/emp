@@ -1,15 +1,14 @@
 import { Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { SingleEmployeeDataService } from "./single-employee-data.service";
 import { Employee } from "../MyDatatypes/Employee";
-import { of } from "rxjs";
 // employees interface
 
 @Injectable({
   providedIn: "root",
 })
 export class EmpsDataService {
-  private employees: Employee[] = [];
-  constructor(private singleEmps: SingleEmployeeDataService) {
+  private employees: Employee[];
+  constructor() {
     this.employees = [
       {
         name: "Grace",
@@ -73,32 +72,23 @@ export class EmpsDataService {
         position: "developer",
       },
     ];
-
-    this.res.set(this.employees);
   }
-  res = signal(this.employees);
-  getEmployee(): WritableSignal<Employee[]> {
-    this.res = signal(this.employees);
-    return this.res;
+  getEmployee() {
+    return this.employees;
   }
 
   addEmployee(employee: Employee) {
     this.employees.push(employee);
-    this.res.set(this.employees);
   }
 
   removeEmployee(employee: Employee) {
-    let index = this.employees.indexOf(employee);
+    let index = this.employees.map((x) => x.name).indexOf(employee.name);
     if (index != -1) {
       this.employees.splice(index, 1);
-      this.singleEmps.setEmployee(null);
-
       return true;
     } else {
-      this.singleEmps.setEmployee(null);
+      return false;
     }
-    this.res.set(this.employees);
-    return false;
   }
 
   editEmployee(oldEmployeeData: Employee, newEmployeeData: Employee) {
@@ -107,6 +97,5 @@ export class EmpsDataService {
       1,
       newEmployeeData
     );
-    this.res.set(this.employees);
   }
 }

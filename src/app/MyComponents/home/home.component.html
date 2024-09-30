@@ -35,6 +35,7 @@
     mat-row
     *matRowDef="let row; columns: displayedColumns"
     (click)="selectRow(row)"
-    [routerLink]="empLink"
+    [routerLink]="['/employee']"
+    [queryParams]="row"
   ></tr>
 </table>

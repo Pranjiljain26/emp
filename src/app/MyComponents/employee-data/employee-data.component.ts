@@ -1,76 +1,80 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { MaterialModule } from '../../MaterialImport';
-import { SingleEmployeeDataService } from '../../MyServices/single-employee-data.service';
-import { EmpsDataService } from '../../MyServices/emps-data.service';
-import { MatDialog } from '@angular/material/dialog';
-import { EditEmployeeComponent } from '../employee-dialog/edit-employee/edit-employee.component';
-import { Route, Router, RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Employee } from "./../../MyDatatypes/Employee";
+import { Component, inject, OnInit, signal } from "@angular/core";
+import { MaterialModule } from "../../MaterialImport";
+import { EmpsDataService } from "../../MyServices/emps-data.service";
+import { MatDialog } from "@angular/material/dialog";
+import { EditEmployeeComponent } from "../employee-dialog/edit-employee/edit-employee.component";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { ReactiveFormsModule } from "@angular/forms";
+import { AddEmployeeComponent } from "../employee-dialog/add-employee/add-employee.component";
 
 @Component({
-  selector: 'app-employee-data',
+  selector: "app-employee-data",
   standalone: true,
   imports: [MaterialModule, RouterModule, ReactiveFormsModule],
-  templateUrl: './employee-data.component.html',
-  styleUrl: './employee-data.component.css',
+  templateUrl: "./employee-data.component.html",
+  styleUrl: "./employee-data.component.css",
 })
 export class EmployeeDataComponent {
-  employee;
-  nav;
+  // nav;
+  a;
+  employee: Employee;
   constructor(
-    private singleEmployeeService: SingleEmployeeDataService,
     private employeeService: EmpsDataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.employee = signal(singleEmployeeService.getEmployee());
-
-    this.nav = this.router.navigateByUrl(
-      `/employee?name=${this.employee().name}`
-    );
+    this.route.queryParamMap.subscribe((params) => {
+      this.a = { ...params.keys, ...params };
+      this.employee = {
+        name: this.a.params["name"],
+        joindate: this.a.params["joindate"],
+        position: this.a.params["position"],
+        email: this.a.params["email"],
+      };
+    });
   }
 
   deleteEmployee() {
     let confirmDelete = confirm(
-      'Do you want to proceed to remove this employee:'
+      "Do you want to proceed to remove this employee:"
     );
     if (confirmDelete) {
-      let removed = this.employeeService.removeEmployee(this.employee());
+      let removed = this.employeeService.removeEmployee(this.employee);
       if (removed) {
-        alert('Employee Deleted successfully');
+        alert("Employee Deleted successfully");
+        this.router.navigateByUrl("/employee");
       } else {
-        alert('Employee Does not exist on database');
+        alert("Employee Does not exist on database");
       }
-      this.employee.set({
-        name: 'NA',
-        position: 'NA',
-        email: 'NA',
-        joindate: 'NA',
-      });
     }
-    this.nav = this.router.navigateByUrl(
-      `/employee?name=${this.employee().name}`
-    );
   }
-
   // open dialog edit
   readonly editDialog = inject(MatDialog);
   openDialog(): void {
-    const dialogRef = this.editDialog.open(EditEmployeeComponent, {
-      height: '70%',
-      width: '50%',
-      data: this.employee(),
-    });
+    let dialogRef;
+    if (this.employee.name == undefined) {
+      let wantToAdd = confirm("Do You want to add a new Employee");
+      if (wantToAdd) {
+        dialogRef = this.editDialog.open(AddEmployeeComponent, {
+          height: "70%",
+          width: "50%",
+          data: this.employee,
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          this.router.navigate(["/employee"], { queryParams: result });
+        });
+      }
+    } else {
+      dialogRef = this.editDialog.open(EditEmployeeComponent, {
+        height: "70%",
+        width: "50%",
+        data: this.employee,
+      });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.employee = this.employeeService.getEmployee();
-
-      alert('Employee edit closed');
-
-      this.employee.set(this.singleEmployeeService.getEmployee());
-      console.log(this.employee().name);
-      this.nav = this.router.navigateByUrl(
-        `/employee?name=${this.employee().name}`
-      );
-    });
+      dialogRef.afterClosed().subscribe((result) => {
+        this.router.navigate(["/employee"], { queryParams: result });
+      });
+    }
   }
 }
