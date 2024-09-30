@@ -1,52 +1,41 @@
-import {
-  AfterViewChecked,
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, OnInit } from "@angular/core";
 import {
   ActivatedRoute,
   NavigationStart,
-  Route,
   Router,
   RouterLink,
   RouterOutlet,
-} from '@angular/router';
-import { MaterialModule } from './MaterialImport';
-import { HomeComponent } from './MyComponents/home/home.component';
-import { AddEmployeeComponent } from './MyComponents/employee-dialog/add-employee/add-employee.component';
-import { MatDialog } from '@angular/material/dialog';
-interface Employee {
-  name: string;
-  dob: string;
-  email: string;
-  position: string;
-}
+} from "@angular/router";
+import { MaterialModule } from "./MaterialImport";
+import { MatDialog } from "@angular/material/dialog";
+import { EditEmployeeComponent } from "./MyComponents/employee-dialog/edit-employee/edit-employee.component";
+
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
   imports: [RouterOutlet, MaterialModule, RouterLink],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.css",
 })
 export class AppComponent implements OnInit {
-  title: string = 'Home';
+  title: string = "Home";
   showAddingEmployee: any;
   isHome = false;
   constructor(private router: Router, private route: ActivatedRoute) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        if (event.url === '/home' || event.url === '/') {
-          this.title = 'Home';
+        if (event.url === "/home" || event.url === "/") {
+          this.title = "Home";
           this.isHome = true;
-        } else if (event.url === '/about') {
-          this.title = 'About';
+        } else if (event.url === "/about") {
+          this.title = "About";
           this.isHome = false;
-        } else if (event.url.startsWith('/employee')) {
-          this.route.queryParams.subscribe((data) => {
-            this.title = data['name'];
+        } else if (event.url.startsWith("/employee")) {
+          this.route.queryParamMap.subscribe((params) => {
+            let a;
+            a = { ...params.keys, ...params };
+            this.title = a.params["name"];
           });
           this.isHome = false;
         }
@@ -56,12 +45,13 @@ export class AppComponent implements OnInit {
   // add employee dialog
   dialog = inject(MatDialog);
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddEmployeeComponent, {
-      height: '70%',
-      width: '50%',
+    const dialogRef = this.dialog.open(EditEmployeeComponent, {
+      height: "70%",
+      width: "50%",
+      data: undefined,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl("/router");
     });
   }
 }

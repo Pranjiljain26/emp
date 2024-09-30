@@ -1,15 +1,13 @@
-import { Injectable, Signal, signal, WritableSignal } from "@angular/core";
-import { SingleEmployeeDataService } from "./single-employee-data.service";
+import { Injectable } from "@angular/core";
 import { Employee } from "../MyDatatypes/Employee";
-import { of } from "rxjs";
 // employees interface
 
 @Injectable({
   providedIn: "root",
 })
 export class EmpsDataService {
-  private employees: Employee[] = [];
-  constructor(private singleEmps: SingleEmployeeDataService) {
+  private employees: Employee[];
+  constructor() {
     this.employees = [
       {
         name: "Grace",
@@ -21,7 +19,7 @@ export class EmpsDataService {
         name: "Hank",
         joindate: "28/02/1994",
         email: "hank@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
       {
         name: "Alice",
@@ -39,13 +37,13 @@ export class EmpsDataService {
         name: "Charlie",
         joindate: "30/11/1988",
         email: "charlie@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
       {
         name: "Diana",
         joindate: "10/01/1992",
         email: "diana@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
       {
         name: "Eve",
@@ -57,7 +55,7 @@ export class EmpsDataService {
         name: "Frank",
         joindate: "14/09/1985",
         email: "frank@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
 
       {
@@ -70,43 +68,33 @@ export class EmpsDataService {
         name: "Jack",
         joindate: "05/10/1986",
         email: "jack@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
     ];
-
-    this.res.set(this.employees);
   }
-  res = signal(this.employees);
-  getEmployee(): WritableSignal<Employee[]> {
-    this.res = signal(this.employees);
-    return this.res;
-  }
-
-  addEmployee(employee: Employee) {
-    this.employees.push(employee);
-    this.res.set(this.employees);
+  getEmployee() {
+    return this.employees;
   }
 
   removeEmployee(employee: Employee) {
-    let index = this.employees.indexOf(employee);
+    let index = this.employees.map((x) => x.email).indexOf(employee.email);
     if (index != -1) {
       this.employees.splice(index, 1);
-      this.singleEmps.setEmployee(null);
-
       return true;
     } else {
-      this.singleEmps.setEmployee(null);
+      return false;
     }
-    this.res.set(this.employees);
-    return false;
   }
 
   editEmployee(oldEmployeeData: Employee, newEmployeeData: Employee) {
-    this.employees.splice(
-      this.employees.indexOf(oldEmployeeData),
-      1,
-      newEmployeeData
-    );
-    this.res.set(this.employees);
+    // if old employee does not exist we will add the employee, else update
+    let index = this.employees
+      .map((x) => x.email)
+      .indexOf(oldEmployeeData.email);
+    if (index !== -1) {
+      this.employees.splice(index, 1, newEmployeeData);
+    } else {
+      this.employees.push(newEmployeeData);
+    }
   }
 }

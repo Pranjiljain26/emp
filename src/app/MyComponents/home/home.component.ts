@@ -1,57 +1,51 @@
-import { Component } from '@angular/core';
-import { EmpsDataService } from '../../MyServices/emps-data.service';
-import { MaterialModule } from '../../MaterialImport';
-import { SingleEmployeeDataService } from '../../MyServices/single-employee-data.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { Sort } from '@angular/material/sort';
-import { Employee } from '../../MyDatatypes/Employee';
+import { Component } from "@angular/core";
+import { EmpsDataService } from "../../MyServices/emps-data.service";
+import { MaterialModule } from "../../MaterialImport";
+import { MatTableDataSource } from "@angular/material/table";
+import { Sort } from "@angular/material/sort";
+import { Employee } from "../../MyDatatypes/Employee";
 
 @Component({
-  selector: 'app-home',
+  selector: "app-home",
   standalone: true,
   imports: [MaterialModule],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'], // Corrected from styleUrl to styleUrls
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"], // Corrected from styleUrl to styleUrls
 })
 export class HomeComponent {
   dataSource: MatTableDataSource<Employee>;
-  displayedColumns: string[] = ['name', 'joindate', 'email', 'position'];
+  displayedColumns: string[] = ["name", "joindate", "email", "position"];
   sortedData: Employee[];
 
-  constructor(
-    private emps: EmpsDataService,
-    private singleEmployee: SingleEmployeeDataService
-  ) {
+  constructor(private emps: EmpsDataService) {
     const a = emps.getEmployee();
-    this.dataSource = new MatTableDataSource(a()); // Initialize data source
+    this.dataSource = new MatTableDataSource(a); // Initialize data source
     this.sortedData = this.dataSource.data; // Use data from MatTableDataSource
   }
 
   selectedEmployee: Employee;
-  empLink = '/employee';
 
   selectRow(row: Employee) {
     this.selectedEmployee = row;
-    this.singleEmployee.setEmployee(this.selectedEmployee);
   }
 
   sortData(sort: Sort) {
     const data = this.dataSource.data.slice();
-    if (!sort.active || sort.direction === '') {
+    if (!sort.active || sort.direction === "") {
       this.sortedData = data;
       return;
     }
     this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
+      const isAsc = sort.direction === "asc";
       switch (sort.active) {
-        case 'name':
+        case "name":
           return compare(a.name, b.name, isAsc);
-        case 'joindate':
+        case "joindate":
           return compareDates(a.joindate, b.joindate, isAsc);
 
-        case 'email':
+        case "email":
           return compare(a.email, b.email, isAsc);
-        case 'position':
+        case "position":
           return compare(a.position, b.position, isAsc);
         default:
           return 0;
@@ -74,6 +68,6 @@ function compareDates(dateStrA: string, dateStrB: string, isAsc: boolean) {
 
 // parsing the dates manually
 function parseDate(dateStr: string): Date {
-  const [month, day, year] = dateStr.split('/').map(Number);
+  const [month, day, year] = dateStr.split("/").map(Number);
   return new Date(year, month - 1, day);
 }
