@@ -20,7 +20,7 @@ export class EmpsDataService {
         name: "Hank",
         joindate: "28/02/1994",
         email: "hank@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
       {
         name: "Alice",
@@ -38,13 +38,13 @@ export class EmpsDataService {
         name: "Charlie",
         joindate: "30/11/1988",
         email: "charlie@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
       {
         name: "Diana",
         joindate: "10/01/1992",
         email: "diana@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
       {
         name: "Eve",
@@ -56,7 +56,7 @@ export class EmpsDataService {
         name: "Frank",
         joindate: "14/09/1985",
         email: "frank@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
 
       {
@@ -69,7 +69,7 @@ export class EmpsDataService {
         name: "Jack",
         joindate: "05/10/1986",
         email: "jack@xyz.com",
-        position: "developer",
+        position: "Developer",
       },
     ];
   }

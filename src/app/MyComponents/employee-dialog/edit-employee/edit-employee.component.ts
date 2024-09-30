@@ -72,9 +72,7 @@ export class EditEmployeeComponent implements OnInit {
     if (!this.employeeForm.invalid) {
       let newEmp = this.createEmployee();
       this.emps.editEmployee(this.oldEmployeeData, newEmp);
-      // setting the single employee in server after edit
       this.oldEmployeeData = newEmp;
-      // console.log(newEmp);
       this.dialogRef.close(newEmp);
     }
   }
