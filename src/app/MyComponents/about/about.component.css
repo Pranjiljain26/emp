@@ -1,0 +1,22 @@
+.main{
+    border: none;
+    width: 70%;
+    margin: auto;
+    
+}
+
+.footer{
+    position: sticky;
+    bottom: 0px;
+}
+/* toolbar  */
+.title_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}

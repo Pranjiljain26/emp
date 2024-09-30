@@ -1,0 +1,21 @@
+
+
+a {
+  text-decoration: none;
+}
+
+
+.container-side-nav
+{
+height: 100%
+}
+
+
+/* child */
+.title_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

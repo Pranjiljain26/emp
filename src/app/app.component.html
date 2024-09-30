@@ -1,0 +1,30 @@
+<mat-drawer-container>
+  <mat-drawer mode="over" #sidebar
+    ><mat-list>
+      <a routerLink="/home"
+        ><mat-list-item matRipple>Employee</mat-list-item></a
+      >
+      <a routerLink="/about"
+        ><mat-list-item matRipple>About </mat-list-item></a
+      ></mat-list
+    >
+  </mat-drawer>
+
+  <mat-drawer-content class="container-main">
+    <mat-toolbar>
+      <button mat-icon-button (click)="sidebar.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <div class="title_box">
+        <h4 class="title">{{ title }}</h4>
+        @if(isHome){
+        <button mat-icon-button (click)="openDialog()">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+        }
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

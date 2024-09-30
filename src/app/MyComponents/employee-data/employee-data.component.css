@@ -1,0 +1,33 @@
+.employee-details{
+    min-width: 300px;
+    width: 40%;
+    margin: 10% auto;
+    min-height:52vh;
+}
+
+.emp_data{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+@media screen and (max-width:400px) {
+.emp_data {
+    grid-template-columns: auto ;
+}
+}
+
+a {
+    text-decoration: none;
+}
+
+/* footer */
+.main {
+    border: none;
+    width: 70%;
+    margin: auto;
+}
+
+.footer {
+    position: sticky;
+    bottom: 0px;
+}
+

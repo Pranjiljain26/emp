@@ -1,0 +1,21 @@
+<mat-card appearance="outlined" class="employee-details">
+  <mat-card-content class="emp_data">
+    <p>Name:</p>
+    <p>{{ employee().name }}</p>
+    <p>Joining date:</p>
+    <p>{{ employee().joindate }}</p>
+    <p>Email:</p>
+    <p>{{ employee().email }}</p>
+    <p>Position:</p>
+    <p>{{ employee().position }}</p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="openDialog()">EDIT</button>
+    <button mat-button (click)="deleteEmployee()" color="warn">DELETE</button>
+  </mat-card-actions>
+</mat-card>
+<mat-toolbar class="footer">
+  <mat-toolbar-row>
+    All Rights Reserved &copy; Global Automation inc
+  </mat-toolbar-row>
+</mat-toolbar>
