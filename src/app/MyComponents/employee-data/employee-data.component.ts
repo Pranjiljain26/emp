@@ -62,7 +62,9 @@ export class EmployeeDataComponent {
           data: this.employee,
         });
         dialogRef.afterClosed().subscribe((result) => {
-          this.router.navigate(["/employee"], { queryParams: result });
+          if (result !== undefined) {
+            this.router.navigate(["/employee"], { queryParams: result });
+          }
         });
       }
     } else {
@@ -73,7 +75,9 @@ export class EmployeeDataComponent {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        this.router.navigate(["/employee"], { queryParams: result });
+        if (result !== undefined) {
+          this.router.navigate(["/employee"], { queryParams: result });
+        }
       });
     }
   }
