@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import {
   ReactiveFormsModule,
   FormsModule,
@@ -9,7 +9,6 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MaterialModule } from "../../../MaterialImport";
 import { EmpsDataService } from "../../../MyServices/emps-data.service";
-import { SingleEmployeeDataService } from "../../../MyServices/single-employee-data.service";
 import { EmployeeDataComponent } from "../../employee-data/employee-data.component";
 import { Employee } from "../../../MyDatatypes/Employee";
 
@@ -23,30 +22,38 @@ import { Employee } from "../../../MyDatatypes/Employee";
 export class EditEmployeeComponent implements OnInit {
   // dependency injections
   readonly dialogRef = inject(MatDialogRef<EmployeeDataComponent>);
-  oldEmployeeData = inject(MAT_DIALOG_DATA);
-
+  oldEmployeeData: Employee = inject(MAT_DIALOG_DATA);
+  employeeForm = null;
+  tempEmployee: Employee;
   // ? employee form
-  employeeForm = new FormGroup({
-    name: new FormControl(
-      this.oldEmployeeData.name === "NA" ? "" : this.oldEmployeeData.name,
-      [Validators.required]
-    ),
-    joindate: new FormControl(
-      this.oldEmployeeData.joindate,
-      Validators.required
-    ),
-    email: new FormControl(
-      this.oldEmployeeData.email === "NA" ? "" : this.oldEmployeeData.email,
-      [Validators.email, Validators.required]
-    ),
-    position: new FormControl(
-      this.oldEmployeeData.position,
-      Validators.required
-    ),
-  });
+  constructor(private emps: EmpsDataService) {
+    if (this.oldEmployeeData === undefined) {
+      this.oldEmployeeData = {
+        name: "",
+        joindate: "",
+        email: "",
+        position: "",
+      };
+    }
+  }
 
-  constructor(private emps: EmpsDataService) {}
-  ngOnInit(): void {
+  ngOnInit() {
+    this.employeeForm = new FormGroup({
+      name: new FormControl(this.oldEmployeeData.name, [Validators.required]),
+      joindate: new FormControl(
+        this.oldEmployeeData.joindate,
+        Validators.required
+      ),
+      email: new FormControl(this.oldEmployeeData.email, [
+        Validators.email,
+        Validators.required,
+      ]),
+      position: new FormControl(
+        this.oldEmployeeData.position,
+        Validators.required
+      ),
+    });
+    // setting default values
     this.employeeForm.get("position").setValue(this.oldEmployeeData.position);
     const oldJoinDate = this.oldEmployeeData.joindate;
     const [day, month, year] = oldJoinDate.split("/").map(Number);
@@ -72,7 +79,6 @@ export class EditEmployeeComponent implements OnInit {
     if (!this.employeeForm.invalid) {
       let newEmp = this.createEmployee();
       this.emps.editEmployee(this.oldEmployeeData, newEmp);
-      this.oldEmployeeData = newEmp;
       this.dialogRef.close(newEmp);
     }
   }

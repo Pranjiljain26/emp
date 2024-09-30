@@ -1,5 +1,4 @@
-import { Injectable, Signal, signal, WritableSignal } from "@angular/core";
-import { SingleEmployeeDataService } from "./single-employee-data.service";
+import { Injectable } from "@angular/core";
 import { Employee } from "../MyDatatypes/Employee";
 // employees interface
 
@@ -77,10 +76,6 @@ export class EmpsDataService {
     return this.employees;
   }
 
-  addEmployee(employee: Employee) {
-    this.employees.push(employee);
-  }
-
   removeEmployee(employee: Employee) {
     let index = this.employees.map((x) => x.name).indexOf(employee.name);
     if (index != -1) {
@@ -92,10 +87,16 @@ export class EmpsDataService {
   }
 
   editEmployee(oldEmployeeData: Employee, newEmployeeData: Employee) {
-    this.employees.splice(
-      this.employees.indexOf(oldEmployeeData),
-      1,
-      newEmployeeData
-    );
+    // if old employee does not exist we will add the employee, else update
+
+    if (oldEmployeeData.name !== "") {
+      this.employees.splice(
+        this.employees.indexOf(oldEmployeeData),
+        1,
+        newEmployeeData
+      );
+    } else {
+      this.employees.push(newEmployeeData);
+    }
   }
 }

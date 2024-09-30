@@ -5,7 +5,7 @@ import { HomeComponent } from "./MyComponents/home/home.component";
 
 export const routes: Routes = [
   // { path: "employee", component: EmployeeDataComponent },
-  { path: "home", component: HomeComponent },
+  { path: "home", redirectTo: "" },
   { path: "", component: HomeComponent },
   { path: "about", component: AboutComponent },
   { path: "employee", component: EmployeeDataComponent },

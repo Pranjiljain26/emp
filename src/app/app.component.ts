@@ -1,28 +1,15 @@
-import {
-  AfterViewChecked,
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import {
   ActivatedRoute,
   NavigationStart,
-  Route,
   Router,
   RouterLink,
   RouterOutlet,
 } from "@angular/router";
 import { MaterialModule } from "./MaterialImport";
-import { HomeComponent } from "./MyComponents/home/home.component";
-import { AddEmployeeComponent } from "./MyComponents/employee-dialog/add-employee/add-employee.component";
 import { MatDialog } from "@angular/material/dialog";
-interface Employee {
-  name: string;
-  dob: string;
-  email: string;
-  position: string;
-}
+import { EditEmployeeComponent } from "./MyComponents/employee-dialog/edit-employee/edit-employee.component";
+
 @Component({
   selector: "app-root",
   standalone: true,
@@ -49,9 +36,6 @@ export class AppComponent implements OnInit {
             let a;
             a = { ...params.keys, ...params };
             this.title = a.params["name"];
-            // {
-            // name: ,
-            // }.name;
           });
           this.isHome = false;
         }
@@ -61,9 +45,10 @@ export class AppComponent implements OnInit {
   // add employee dialog
   dialog = inject(MatDialog);
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+    const dialogRef = this.dialog.open(EditEmployeeComponent, {
       height: "70%",
       width: "50%",
+      data: undefined,
     });
     dialogRef.afterClosed().subscribe((result) => {
       this.router.navigateByUrl("/");
