@@ -1,41 +1,63 @@
-<table
-  mat-table
-  [dataSource]="sortedData"
-  matSort
-  (matSortChange)="sortData($event)"
->
+<table mat-table [dataSource]="dd" matSort (matSortChange)="sortData($event)">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
-    <td mat-cell *matCellDef="let element" matRipple>{{ element.name }}</td>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      matRipple
+      [routerLink]="['/employee']"
+      [queryParams]="{ eid: element.eid }"
+    >
+      {{ element.name }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="joindate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Join Date</th>
-    <td mat-cell *matCellDef="let element" matRipple>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      matRipple
+      [routerLink]="['/employee']"
+      [queryParams]="{ eid: element.eid }"
+    >
       {{ element.joindate }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-    <td mat-cell *matCellDef="let element" matRipple>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      matRipple
+      [routerLink]="['/employee']"
+      [queryParams]="{ eid: element.eid }"
+    >
       {{ element.email }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Position</th>
-    <td mat-cell *matCellDef="let element" matRipple>
+    <td
+      mat-cell
+      *matCellDef="let element"
+      matRipple
+      [routerLink]="['/employee']"
+      [queryParams]="{ eid: element.eid }"
+    >
       {{ element.position }}
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
+    <td mat-cell *matCellDef="let element" matRipple>
+      <mat-icon (click)="deleteRow(element.eid)">remove_circle</mat-icon>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: displayedColumns"
-    (click)="selectRow(row)"
-    [routerLink]="['/employee']"
-    [queryParams]="row"
-  ></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>

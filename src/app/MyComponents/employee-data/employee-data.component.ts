@@ -1,5 +1,5 @@
 import { Employee } from "./../../MyDatatypes/Employee";
-import { Component, inject } from "@angular/core";
+import { Component, inject, signal, WritableSignal } from "@angular/core";
 import { MaterialModule } from "../../MaterialImport";
 import { EmpsDataService } from "../../MyServices/emps-data.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DeleteDialogComponent } from "../delete-dialog/delete-dialog.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Observable, of, single } from "rxjs";
 
 @Component({
   selector: "app-employee-data",
@@ -17,10 +18,13 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrl: "./employee-data.component.css",
 })
 export class EmployeeDataComponent {
-  // !snack bar
+  // snack bar
   private _snackBar = inject(MatSnackBar);
 
   a;
+  // taking eid for the particular employee
+  eid: number;
+  obj: WritableSignal<Employee>;
   employee: Employee;
   constructor(
     private employeeService: EmpsDataService,
@@ -29,13 +33,10 @@ export class EmployeeDataComponent {
   ) {
     this.route.queryParamMap.subscribe((params) => {
       this.a = { ...params.keys, ...params };
-      this.employee = {
-        name: this.a.params["name"],
-        joindate: this.a.params["joindate"],
-        position: this.a.params["position"],
-        email: this.a.params["email"],
-      };
+      this.eid = this.a.params["eid"];
     });
+    this.employee = employeeService.getEmployeeById(this.eid);
+    this.obj = signal(this.employee);
   }
   // delete dialog
   readonly deleteDialog = inject(MatDialog);
@@ -48,7 +49,6 @@ export class EmployeeDataComponent {
         let removed = this.employeeService.removeEmployee(this.employee);
         if (removed) {
           this._snackBar.open("Employee Deleted Successfully");
-
           this.router.navigateByUrl("/home");
         }
       }
@@ -62,10 +62,9 @@ export class EmployeeDataComponent {
       width: "50%",
       data: this.employee,
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
-        this.router.navigate(["/employee"], { queryParams: result });
+        this.obj.set(result);
       }
     });
   }

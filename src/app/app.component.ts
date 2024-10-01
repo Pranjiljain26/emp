@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject, OnChanges, OnInit } from "@angular/core";
 import {
   ActivatedRoute,
   NavigationStart,
@@ -9,6 +9,7 @@ import {
 import { MaterialModule } from "./MaterialImport";
 import { MatDialog } from "@angular/material/dialog";
 import { EditEmployeeComponent } from "./MyComponents/employee-dialog/edit-employee/edit-employee.component";
+import { EmpsDataService } from "./MyServices/emps-data.service";
 
 @Component({
   selector: "app-root",
@@ -21,7 +22,11 @@ export class AppComponent implements OnInit {
   title: string = "Home";
   showAddingEmployee: any;
   isHome = false;
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private emps: EmpsDataService
+  ) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -32,10 +37,14 @@ export class AppComponent implements OnInit {
           this.title = "About";
           this.isHome = false;
         } else if (event.url.startsWith("/employee")) {
+          let a = null;
           this.route.queryParamMap.subscribe((params) => {
-            let a;
             a = { ...params.keys, ...params };
-            this.title = a.params["name"];
+            let eid = a.params["eid"];
+            let data = this.emps.getEmployeeById(eid);
+            if (data) {
+              this.title = data.name;
+            }
           });
           this.isHome = false;
         }
@@ -51,7 +60,7 @@ export class AppComponent implements OnInit {
       data: undefined,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      this.router.navigateByUrl("/router");
+      // this.router.navigateByUrl("/rerouter");
     });
   }
 }

@@ -1,11 +1,15 @@
 <mat-drawer-container>
   <mat-drawer mode="over" #sidebar
     ><mat-list>
-      <a routerLink="/home"
-        ><mat-list-item matRipple>Employee</mat-list-item></a
+      <a routerLink="/home" (click)="sidebar.toggle()"
+        ><mat-list-item matRipple
+          ><mat-icon>groups</mat-icon> Employee</mat-list-item
+        ></a
       >
-      <a routerLink="/about"
-        ><mat-list-item matRipple>About </mat-list-item></a
+      <a routerLink="/about" (click)="sidebar.toggle()"
+        ><mat-list-item matRipple
+          ><mat-icon>info</mat-icon> About
+        </mat-list-item></a
       ></mat-list
     >
   </mat-drawer>

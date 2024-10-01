@@ -11,6 +11,7 @@ import { MaterialModule } from "../../../MaterialImport";
 import { EmpsDataService } from "../../../MyServices/emps-data.service";
 import { EmployeeDataComponent } from "../../employee-data/employee-data.component";
 import { Employee } from "../../../MyDatatypes/Employee";
+import { C } from "@angular/cdk/keycodes";
 
 @Component({
   selector: "app-edit-employee",
@@ -29,6 +30,7 @@ export class EditEmployeeComponent implements OnInit {
   constructor(private emps: EmpsDataService) {
     if (this.oldEmployeeData === undefined) {
       this.oldEmployeeData = {
+        eid: -1,
         name: "",
         joindate: "",
         email: "",
@@ -67,6 +69,7 @@ export class EditEmployeeComponent implements OnInit {
       return this.oldEmployeeData;
     }
     let newEmp: Employee = {
+      eid: this.oldEmployeeData.eid,
       name: this.employeeForm.value.name,
       joindate: new Date(this.employeeForm.value.joindate).toLocaleDateString(),
       email: this.employeeForm.value.email,

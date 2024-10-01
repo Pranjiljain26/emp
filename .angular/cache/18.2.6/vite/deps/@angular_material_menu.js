@@ -2,26 +2,23 @@ import {
   Overlay,
   OverlayConfig,
   OverlayModule
-} from "./chunk-PBADIEXY.js";
+} from "./chunk-RFWE2OWS.js";
 import {
   animate,
   state,
   style,
   transition,
   trigger
-} from "./chunk-VMQBBZHV.js";
+} from "./chunk-PGNZIFI6.js";
 import {
   MatCommonModule,
   MatRipple,
   MatRippleModule
-} from "./chunk-BCLIVONI.js";
+} from "./chunk-IT2ZUU6E.js";
 import {
   DomPortalOutlet,
   TemplatePortal
-} from "./chunk-O6IKJWLW.js";
-import {
-  CdkScrollableModule
-} from "./chunk-XA262BRC.js";
+} from "./chunk-TMDSN5A4.js";
 import {
   DOWN_ARROW,
   ENTER,
@@ -35,18 +32,21 @@ import {
   hasModifierKey,
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader
-} from "./chunk-PSWGENW5.js";
-import "./chunk-DDFTWTEV.js";
+} from "./chunk-T6JUU526.js";
+import {
+  CdkScrollableModule
+} from "./chunk-FIF6JVGO.js";
+import "./chunk-JL7LUEE5.js";
 import {
   Directionality
-} from "./chunk-SVUB5RSC.js";
+} from "./chunk-5OOUSIKN.js";
 import {
   normalizePassiveListenerOptions
-} from "./chunk-GII2OL6M.js";
+} from "./chunk-MC3OTI5M.js";
 import {
   CommonModule,
   DOCUMENT
-} from "./chunk-PJQ3HXQI.js";
+} from "./chunk-W5JEUK2H.js";
 import {
   ApplicationRef,
   ChangeDetectionStrategy,
@@ -68,27 +68,14 @@ import {
   Output,
   QueryList,
   Self,
-  Subject,
-  Subscription,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation$1,
-  __spreadProps,
-  __spreadValues,
   afterNextRender,
-  asapScheduler,
   booleanAttribute,
-  delay,
-  filter,
   inject,
-  merge,
-  of,
   setClassMetadata,
-  startWith,
-  switchMap,
-  take,
-  takeUntil,
   ɵɵInputTransformsFeature,
   ɵɵProvidersFeature,
   ɵɵStandaloneFeature,
@@ -119,7 +106,22 @@ import {
   ɵɵrestoreView,
   ɵɵtemplate,
   ɵɵviewQuery
-} from "./chunk-LOPWFTFR.js";
+} from "./chunk-KJZSCXEF.js";
+import {
+  Subject,
+  Subscription,
+  __spreadProps,
+  __spreadValues,
+  asapScheduler,
+  delay,
+  filter,
+  merge,
+  of,
+  startWith,
+  switchMap,
+  take,
+  takeUntil
+} from "./chunk-2CVCC5YH.js";
 
 // node_modules/@angular/material/fesm2022/menu.mjs
 var _c0 = ["mat-menu-item", ""];

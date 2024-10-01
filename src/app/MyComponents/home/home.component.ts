@@ -1,26 +1,44 @@
-import { Component } from "@angular/core";
+import { Employee } from "./../../MyDatatypes/Employee";
+import { Component, inject } from "@angular/core";
 import { EmpsDataService } from "../../MyServices/emps-data.service";
 import { MaterialModule } from "../../MaterialImport";
 import { MatTableDataSource } from "@angular/material/table";
 import { Sort } from "@angular/material/sort";
-import { Employee } from "../../MyDatatypes/Employee";
+import { Route, Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { DeleteDialogComponent } from "../delete-dialog/delete-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-home",
   standalone: true,
   imports: [MaterialModule],
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"], // Corrected from styleUrl to styleUrls
+  styleUrls: ["./home.component.css"],
 })
 export class HomeComponent {
   dataSource: MatTableDataSource<Employee>;
-  displayedColumns: string[] = ["name", "joindate", "email", "position"];
+  displayedColumns: string[] = [
+    "name",
+    "joindate",
+    "email",
+    "position",
+    "delete",
+  ];
   sortedData: Employee[];
-
-  constructor(private emps: EmpsDataService) {
+  d1: any;
+  dd;
+  // snack bar
+  private _snackBar = inject(MatSnackBar);
+  constructor(private emps: EmpsDataService, private router: Router) {
     const a = emps.getEmployee();
-    this.dataSource = new MatTableDataSource(a); // Initialize data source
-    this.sortedData = this.dataSource.data; // Use data from MatTableDataSource
+    this.dataSource = new MatTableDataSource(a);
+    this.sortedData = this.dataSource.data;
+    emps.getTableData().subscribe((data) => {
+      this.dd = [...data];
+      console.log(data);
+      // console.log(typeof data);
+    });
   }
 
   selectedEmployee: Employee;
@@ -29,6 +47,19 @@ export class HomeComponent {
     this.selectedEmployee = row;
   }
 
+  readonly deleteDialog = inject(MatDialog);
+  deleteRow(eid) {
+    let employee: Employee = this.emps.getEmployeeById(eid);
+    let dialogRef = this.deleteDialog.open(DeleteDialogComponent, {});
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let removed = this.emps.removeEmployee(employee);
+        if (removed) {
+          this._snackBar.open("Employee Deleted Successfully");
+        }
+      }
+    });
+  }
   sortData(sort: Sort) {
     const data = this.dataSource.data.slice();
     if (!sort.active || sort.direction === "") {
@@ -42,7 +73,6 @@ export class HomeComponent {
           return compare(a.name, b.name, isAsc);
         case "joindate":
           return compareDates(a.joindate, b.joindate, isAsc);
-
         case "email":
           return compare(a.email, b.email, isAsc);
         case "position":

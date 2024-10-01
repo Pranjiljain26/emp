@@ -5,10 +5,9 @@ import { HomeComponent } from "./MyComponents/home/home.component";
 import { RedirectorComponent } from "./MyComponents/redirector/redirector.component";
 
 export const routes: Routes = [
-  // { path: "employee", component: EmployeeDataComponent },
-  { path: "home", redirectTo: "" },
-  { path: "", component: HomeComponent },
+  { path: "home", component: HomeComponent },
   { path: "about", component: AboutComponent },
   { path: "employee", component: EmployeeDataComponent },
-  { path: "router", component: RedirectorComponent },
+  { path: "", pathMatch: "full", redirectTo: "home" },
+  { path: "rerouter", component: RedirectorComponent },
 ];

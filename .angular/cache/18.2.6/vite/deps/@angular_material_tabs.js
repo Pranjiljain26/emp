@@ -1,27 +1,23 @@
 import {
   SharedResizeObserver
-} from "./chunk-PWQYYMZL.js";
+} from "./chunk-7Z2HVKMQ.js";
 import {
   animate,
   state,
   style,
   transition,
   trigger
-} from "./chunk-VMQBBZHV.js";
+} from "./chunk-PGNZIFI6.js";
 import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatCommonModule,
   MatRipple
-} from "./chunk-BCLIVONI.js";
+} from "./chunk-IT2ZUU6E.js";
 import {
   CdkPortal,
   CdkPortalOutlet,
   TemplatePortal
-} from "./chunk-O6IKJWLW.js";
-import {
-  CdkScrollable,
-  ViewportRuler
-} from "./chunk-XA262BRC.js";
+} from "./chunk-TMDSN5A4.js";
 import {
   CdkMonitorFocus,
   CdkObserveContent,
@@ -30,22 +26,25 @@ import {
   FocusMonitor,
   SPACE,
   hasModifierKey
-} from "./chunk-PSWGENW5.js";
-import "./chunk-DDFTWTEV.js";
+} from "./chunk-T6JUU526.js";
+import {
+  CdkScrollable,
+  ViewportRuler
+} from "./chunk-FIF6JVGO.js";
+import "./chunk-JL7LUEE5.js";
 import {
   Directionality
-} from "./chunk-SVUB5RSC.js";
+} from "./chunk-5OOUSIKN.js";
 import {
   Platform,
   normalizePassiveListenerOptions
-} from "./chunk-GII2OL6M.js";
+} from "./chunk-MC3OTI5M.js";
 import {
   DOCUMENT
-} from "./chunk-PJQ3HXQI.js";
+} from "./chunk-W5JEUK2H.js";
 import {
   ANIMATION_MODULE_TYPE,
   Attribute,
-  BehaviorSubject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -53,7 +52,6 @@ import {
   ContentChild,
   ContentChildren,
   Directive,
-  EMPTY,
   ElementRef,
   EventEmitter,
   Inject,
@@ -62,33 +60,19 @@ import {
   Input,
   NgModule,
   NgZone,
-  Observable,
   Optional,
   Output,
   QueryList,
-  Subject,
-  Subscription,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation$1,
   afterNextRender,
   booleanAttribute,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
   forwardRef,
-  fromEvent,
   inject,
-  merge,
   numberAttribute,
-  of,
   setClassMetadata,
-  skip,
-  startWith,
-  switchMap,
-  takeUntil,
-  timer,
   ɵɵInheritDefinitionFeature,
   ɵɵInputTransformsFeature,
   ɵɵNgOnChangesFeature,
@@ -130,7 +114,25 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵviewQuery
-} from "./chunk-LOPWFTFR.js";
+} from "./chunk-KJZSCXEF.js";
+import {
+  BehaviorSubject,
+  EMPTY,
+  Observable,
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  fromEvent,
+  merge,
+  of,
+  skip,
+  startWith,
+  switchMap,
+  takeUntil,
+  timer
+} from "./chunk-2CVCC5YH.js";
 
 // node_modules/@angular/material/fesm2022/tabs.mjs
 var _c0 = ["*"];
